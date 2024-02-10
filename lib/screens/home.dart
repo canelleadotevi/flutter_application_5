@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_5/models/account_info.dart';
 import 'package:flutter_application_5/screens/realhome.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter_application_5/custom_bottom_navigation_bar.dart';
 import 'package:photo_browser/photo_browser.dart';
 
 class Home extends StatefulWidget {
@@ -16,6 +17,11 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     int _selectedIndex = 0;
+    void _onItemTapped(int index) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
 
     return Scaffold(
       appBar: PreferredSize(
@@ -264,189 +270,10 @@ class _HomeState extends State<Home> {
           ],
         ),
       ),
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.white,
-        animationCurve: Curves.easeIn,
-        animationDuration: Duration(milliseconds: 0),
-        index: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-          if (index == 0) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => RealHome()),
-            );
-          } else if (index == 3) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => Home()),
-            );
-          }
-        },
-        items: [
-          Icon(
-            Icons.home,
-            color: _selectedIndex == 0 ? Colors.blue : Colors.grey,
-          ),
-          Icon(
-            Icons.search,
-            color: _selectedIndex == 1 ? Colors.blue : Colors.grey,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: LinearGradient(colors: colors)
-            ),
-            padding: EdgeInsets.all(8),
-            child: Icon(
-              Icons.cloud_download_rounded,
-              color: _selectedIndex == 2 ? Colors.white : Colors.blue,
-            ),
-          ),
-          Icon(
-            Icons.person,
-            color: _selectedIndex == 3 ? Colors.blue : Colors.grey,
-          ),
-          Icon(
-            Icons.favorite_border_outlined,
-            color: _selectedIndex == 4 ? Colors.blue : Colors.grey,
-          ),
-        ],
-      ),
-    );
-    
-  }
-}
-
-
-/* class Home extends StatefulWidget {
-  const Home({super.key});
-
-  @override
-  State<Home> createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
-  @override
-  Widget build(BuildContext context) {
-        Size size = MediaQuery.of(context).size;
-    int _selectedIndex = 0;
-    return Scaffold(
-      body: Container(
-        padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Card(
-              child: ListTile(
-                contentPadding: EdgeInsets.all(0),
-                leading: Container(
-                  child: Row(
-                    children: [
-                      Container(
-                        width: 30,
-                        height: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          image: const DecorationImage(
-                            image: AssetImage("assets/images/gallery_1.jpg"),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                      SizedBox(width: 5),
-                      Container(
-                        child: Column(
-                          children: [
-                            Text(
-                              "Taylor Swift",
-                              style: TextStyle(
-                                color: Colors.blue,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            SizedBox(height: 2),
-                            Text(
-                              "5 Minutes ago",
-                              style: TextStyle(
-                                color: Colors.grey,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                trailing: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.auto_awesome_motion_outlined,
-                    color: Colors.grey,
-                  ),
-                  color: Color.fromARGB(255, 234, 231, 231),
-                ),
-              ),
-            ),
-            SizedBox(height: 10),
-          ],
-        ),
-      ),
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.white,
-        animationCurve: Curves.easeIn,
-        animationDuration: Duration(milliseconds: 0),
-        index: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-          if (index == 0) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => RealHome()),
-            );
-          } else if (index == 3) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => Home()),
-            );
-          }
-        },
-        items: [
-          Icon(
-            Icons.home,
-            color: _selectedIndex == 0 ? Colors.blue : Colors.grey,
-          ),
-          Icon(
-            Icons.search,
-            color: _selectedIndex == 1 ? Colors.blue : Colors.grey,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: _selectedIndex == 2 ? Colors.blue : Colors.white,
-            ),
-            padding: EdgeInsets.all(8),
-            child: Icon(
-              Icons.cloud_download_rounded,
-              color: _selectedIndex == 2 ? Colors.white : Colors.blue,
-            ),
-          ),
-          Icon(
-            Icons.person,
-            color: _selectedIndex == 3 ? Colors.blue : Colors.grey,
-          ),
-          Icon(
-            Icons.favorite_border_outlined,
-            color: _selectedIndex == 4 ? Colors.blue : Colors.grey,
-          ),
-        ],
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }
 }
- */

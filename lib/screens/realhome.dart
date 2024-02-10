@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter_application_5/custom_bottom_navigation_bar.dart';
 import 'package:flutter_application_5/screens/home.dart';
 
 class RealHome extends StatefulWidget {
@@ -14,6 +14,12 @@ class _RealHomeState extends State<RealHome> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     int _selectedIndex = 0;
+    void _onItemTapped(int index) {
+      setState(() {
+        _selectedIndex = index;
+      });
+    }
+
     return Scaffold(
       body: ListView(scrollDirection: Axis.vertical, children: [
         Container(
@@ -94,9 +100,7 @@ class _RealHomeState extends State<RealHome> {
                   ),
                 ),
                 trailing: Row(
-                  
-                  mainAxisSize:
-                      MainAxisSize.min, 
+                  mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
                       "1,445 likes",
@@ -262,7 +266,6 @@ class _RealHomeState extends State<RealHome> {
                         ),
                       ),
                       title: SizedBox(
-                        
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -314,56 +317,9 @@ class _RealHomeState extends State<RealHome> {
           ),
         ),
       ]),
-      bottomNavigationBar: CurvedNavigationBar(
-        backgroundColor: Colors.white,
-        animationCurve: Curves.easeIn,
-        animationDuration: Duration(milliseconds: 0),
-        index: _selectedIndex,
-        onTap: (index) {
-          setState(() {
-            _selectedIndex = index;
-          });
-          if (index == 0) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => RealHome()),
-            );
-          } else if (index == 3) {
-            Navigator.pushReplacement(
-              context,
-              MaterialPageRoute(builder: (context) => Home()),
-            );
-          }
-        },
-        items: [
-          Icon(
-            Icons.home,
-            color: _selectedIndex == 0 ? Colors.blue : Colors.grey,
-          ),
-          Icon(
-            Icons.search,
-            color: _selectedIndex == 1 ? Colors.blue : Colors.grey,
-          ),
-          Container(
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: _selectedIndex == 2 ? Colors.blue : Colors.white,
-            ),
-            padding: EdgeInsets.all(8),
-            child: Icon(
-              Icons.file_download_outlined,
-              color: _selectedIndex == 2 ? Colors.white : Colors.blue,
-            ),
-          ),
-          Icon(
-            Icons.person,
-            color: _selectedIndex == 3 ? Colors.blue : Colors.grey,
-          ),
-          Icon(
-            Icons.favorite_border_outlined,
-            color: _selectedIndex == 4 ? Colors.blue : Colors.grey,
-          ),
-        ],
+      bottomNavigationBar: CustomBottomNavigationBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
       ),
     );
   }
